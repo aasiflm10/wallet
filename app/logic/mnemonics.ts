@@ -6,7 +6,7 @@ import bs58 from 'bs58';
 
 
 
-function generateRandomMnemonic() : string
+export function generateRandomMnemonic() : string
 {
     const mnemonic = generateMnemonic();
     console.log(mnemonic);
@@ -19,7 +19,7 @@ function generateRandomMnemonic() : string
     return mnemonic;
 }
 
-function getHexofMnemonic({mnemonic} : {mnemonic : string}) : string
+export function getHexofMnemonic({mnemonic} : {mnemonic : string}) : string
 {
     const seed = mnemonicToSeedSync(mnemonic);
     console.log(seed);
@@ -30,7 +30,7 @@ function getHexofMnemonic({mnemonic} : {mnemonic : string}) : string
     return str;
 }
 
-function getPublicAndPrivatekey({i, str} : {i : number, str: string}) : {privateKey : string, publicKey : string}
+export function getPublicAndPrivatekey({i, str} : {i : number, str: string}) : {privateKey : string, publicKey : string}
 {
     const path = `m/44'/501'/${i}'/0'`;
     const derivedSeed = derivePath(path, str).key;
