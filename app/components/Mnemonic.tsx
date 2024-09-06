@@ -12,8 +12,10 @@ export function Mnemonic() {
             
             <button
                 onClick={() => {
-                    setSeedPhrase(generateRandomMnemonic());
+                    const seedPhrase1 = generateRandomMnemonic();
+                    setSeedPhrase(seedPhrase1);
                     console.log(seedPhrase);
+                    localStorage.setItem("seedPhrase", seedPhrase1 );
                     alert("Mnemonic generated");
                 }}
                 className="w-full bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 mb-4"
@@ -31,14 +33,6 @@ export function Mnemonic() {
                 )}
             </div>
             
-            <button
-                onClick={() => {
-                    // Add functionality for Generate Wallet button
-                }}
-                className="w-full bg-green-500 text-white py-2 px-4 rounded-lg hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-opacity-50"
-            >
-                Generate Wallet
-            </button>
         </div>
     );
 }
