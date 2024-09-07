@@ -19,7 +19,7 @@ export function generateRandomMnemonic() : string
     return mnemonic;
 }
 
-export function getHexofMnemonic({mnemonic} : {mnemonic : string}) : string
+export function getHexofMnemonic(mnemonic : string) : string
 {
     const seed = mnemonicToSeedSync(mnemonic);
     console.log(seed);
@@ -30,9 +30,34 @@ export function getHexofMnemonic({mnemonic} : {mnemonic : string}) : string
     return str;
 }
 
-export function getPublicAndPrivatekey({i, str} : {i : number, str: string}) : {privateKey : string, publicKey : string}
+export function getPublicAndPrivatekeySol({i, str} : {i : number, str: string}) : {privateKey : string, publicKey : string}
 {
     const path = `m/44'/501'/${i}'/0'`;
+    const derivedSeed = derivePath(path, str).key;
+    console.log(derivedSeed);
+    const keyPair = nacl.sign.keyPair.fromSeed(derivedSeed);
+    const secretKey = keyPair.secretKey;
+    const publicKey = keyPair.publicKey
+
+    const secretKeyHex = Buffer.from(secretKey).toString("hex");
+    const publicKeyHex = Buffer.from(publicKey).toString("hex");
+    const publicKeyFromSecretKeyBase58 = Keypair.fromSecretKey(secretKey).publicKey.toBase58()
+    const secretKeyBase58 = bs58.encode(secretKey);
+
+    console.log("Hex : ")
+    console.log("secret Key : "+secretKeyHex);
+    console.log("public Key : " +publicKeyHex);
+
+    console.log("bs58 : ")
+    console.log("secret Key : "+secretKeyBase58);
+    console.log("public Key : " +publicKeyFromSecretKeyBase58);
+
+    return { privateKey : secretKeyBase58, publicKey : publicKeyFromSecretKeyBase58};
+}
+
+export function getPublicAndPrivatekeyEth({i, str} : {i : number, str: string}) : {privateKey : string, publicKey : string}
+{
+    const path = `m/44'/60'/${i}'/0'`;
     const derivedSeed = derivePath(path, str).key;
     console.log(derivedSeed);
     const keyPair = nacl.sign.keyPair.fromSeed(derivedSeed);
